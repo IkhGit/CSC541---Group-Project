@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Study Leveling — Profile</title>
+    <link rel="stylesheet" href="Assets/style.css">
+</head>
+<body>
+<div id="app">
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Profile</h1>
+        </div>
+        <div class="header-right">
+            <div class="trophy" title="Trophies">🏆 <span id="trophyCount">0</span></div>
+        </div>
+    </header>
+
+    <main class="container page" id="profile">
+        <div class="card">
+            <div class="flex justify-between">
+                <div>
+                    <h2 id="profileName" style="margin:0">Player</h2>
+                    <div class="small">Level <span id="profileLevel">1</span></div>
+                </div>
+                <button id="editProfileBtn" class="btn">Edit</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Badges</h3>
+            <div id="badgesList" class="badges-list"></div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a class="nav-btn" href="./home.html">Home</a>
+        <a class="nav-btn" href="./quests.html">Quests</a>
+        <a class="nav-btn" href="./profile.html">Profile</a>
+    </nav>
+</div>
+
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="modalClose" class="modal-close">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>

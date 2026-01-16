@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Study Leveling — Sign In</title>
+    <link rel="stylesheet" href="Assets/style.css">
+</head>
+<body>
+<div id="app">
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Study Leveling</h1>
+            <small class="small">Log in to continue</small>
+        </div>
+        <div class="header-right">
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card center-card">
+            <h3>Welcome</h3>
+            <div class="small">Sign in to continue</div>
+        </div>
+
+        <div class="card">
+            <h4>Sign In</h4>
+            <form id="signInForm">
+                <label>Username</label>
+                <label>
+                    <input name="username" type="text" required style="width:100%">
+                </label>
+                <label style="margin-top:8px">Password</label>
+                <label>
+                    <input name="password" type="password" required style="width:100%">
+                </label>
+                <div style="margin-top:8px;display:flex;justify-content:flex-end">
+                    <button class="btn" type="submit">Sign In</button>
+                </div>
+            </form>
+            <div style="margin-top:10px; font-size: 12px; color: #888; text-align: center;">
+                Use admin / admin to bypass
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal (kept consistent across pages) -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="modalClose" class="modal-close">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* Dark theme styles for Study Leveling app */
+:root{
+    --bg:#08080a;
+    --card:#121214;
+    --muted:#80808a;
+    --accent:#7e57ff; /* vibrant purple */
+    --accent-glow: rgba(126, 87, 255, 0.3);
+    --accent-2:#ff8c42; /* vivid orange */
+    --success:#00d26a;
+    --danger:#f92f60;
+    --glass: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.08);
+}
+
+*{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif}
+html,body,#app{height:100%;background:#08080a;margin:0;color:#f0f0f5;overflow-x:hidden}
+
+.app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:rgba(8,8,10,0.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
+.app-header h1{margin:0;font-size:20px;font-weight:700;background:linear-gradient(90deg, #fff, #a285ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.app-header .small, .small{color:var(--muted);font-size:12px}
+.header-right .trophy{background:var(--glass);padding:8px 14px;border-radius:12px;border:1px solid var(--border);color:#ffd700;font-weight:600}
+
+.container{padding:20px;padding-bottom:100px}
+.page{max-width:480px;margin:0 auto}
+
+.card{
+    background:var(--card);
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:20px;
+    border:1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+.card::before{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.center-card{text-align:center}
+
+.profile-level{display:flex;flex-direction:column;align-items:center}
+.level-ring{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:4px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    background: radial-gradient(circle, rgba(126,87,255,0.1) 0%, transparent 70%);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+.level-number{font-size:42px;font-weight:800;color:#fff}
+.level-label{
+    background:var(--accent);
+    color: #fff;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-top:10px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.xp-row{display:flex;justify-content:space-between;width:100%;padding:12px 0 8px}
+.progress-track{height:8px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),#a285ff);box-shadow: 0 0 10px var(--accent-glow);transition: width 0.5s ease-out}
+
+.skills-list .skill{display:flex;align-items:center;margin:16px 0}
+.skill .meta{flex:1}
+.skill .bar{height:6px;background:rgba(255,255,255,0.04);border-radius:6px;margin-top:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.05)}
+.skill .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-2),#ffb38a);width:40%;transition: width 0.5s ease-out}
+.skill .lvl{margin-left:14px;color:var(--muted);font-size:13px;font-weight:600}
+
+.hidden{display:none !important}
+
+.bottom-nav{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:24px;
+    display:flex;
+    gap:10px;
+    background:rgba(18, 18, 20, 0.85);
+    backdrop-filter: blur(15px);
+    padding:8px;
+    border-radius:24px;
+    z-index:100;
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.bottom-nav .nav-btn{
+    background:transparent;
+    color:var(--muted);
+    padding:12px 20px;
+    border-radius:18px;
+    border:none;
+    min-width:80px;
+    text-decoration:none;
+    text-align:center;
+    font-weight:600;
+    font-size:14px;
+    transition: all 0.2s;
+}
+.bottom-nav .nav-btn:hover{color:#fff;background:rgba(255,255,255,0.05)}
+.bottom-nav .nav-btn.active, .bottom-nav .nav-btn[href*="home.html"]{color:var(--accent)} /* simplistic active state for now */
+
+.quests-top-nav{display:flex;gap:8px;margin-bottom:16px;background:var(--glass);padding:4px;border-radius:14px}
+.quests-top-nav .tab{flex:1;padding:12px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-weight:600;cursor:pointer;transition:all 0.2s}
+.quests-top-nav .tab.active{background:var(--card);color:var(--accent);box-shadow: 0 4px 12px rgba(0,0,0,0.2)}
+
+.quest{
+    display:flex;
+    gap:16px;
+    padding:16px;
+    border-radius:18px;
+    margin:12px 0;
+    background:var(--card);
+    align-items:center;
+    border:1px solid var(--border);
+    transition: transform 0.2s;
+}
+.quest:hover{transform: translateY(-2px)}
+.quest .meta{flex:1}
+.quest .actions{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+
+.btn{
+    background:var(--accent);
+    color:#fff;
+    padding:10px 18px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    font-size:14px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+.btn:hover{filter: brightness(1.1); transform: translateY(-1px)}
+.btn:active{transform: scale(0.96)}
+.small-btn{padding:8px 12px;font-size:12px}
+
+.quest.accent-orange{border-left:4px solid var(--accent-2)}
+.quest.accent-green{border-left:4px solid var(--success)}
+.quest.accent-yellow{border-left:4px solid #ffd24d}
+.quest.accent-red{border-left:4px solid var(--danger)}
+.quest .xp{font-weight:700;color:var(--success);font-size:15px}
+
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);z-index:1000}
+.modal-content{
+    background:var(--card);
+    border-radius:24px;
+    padding:32px;
+    min-width:320px;
+    max-width:500px;
+    position:relative;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.8);
+}
+.modal-close{
+    position:absolute;
+    right:16px;
+    top:16px;
+    background:var(--glass);
+    border:none;
+    color:var(--muted);
+    font-size:18px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: all 0.2s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.1);color:#fff}
+
+.quiz-opt{
+    margin: 4px 0;
+    padding: 16px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    text-align: left;
+    width: 100%;
+}
+.quiz-opt:hover{background: var(--accent-glow); border-color: var(--accent)}
+
+.badges-list{display:flex;gap:10px;flex-wrap:wrap}
+.badge{
+    background: linear-gradient(135deg, var(--accent), #a285ff);
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:700;
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+@media(min-width:900px){
+    .page{max-width:540px}
+}
+
+.flex{display:flex;align-items:center}
+.justify-between{display:flex;justify-content:space-between;align-items:center}
+input, select, textarea{
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    color: #fff;
+    margin-top: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+input:focus{border-color: var(--accent)}
+label{font-size:13px;font-weight:600;color:var(--muted);margin-top:12px;display:block}

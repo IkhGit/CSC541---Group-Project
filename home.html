@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Study Leveling — Home</title>
+  <link rel="stylesheet" href="Assets/style.css">
+</head>
+<body>
+<div id="app">
+  <header class="app-header">
+    <div class="header-left">
+      <h1 id="appTitle">Study Leveling</h1>
+      <small id="subtitle">Keep studying!</small>
+    </div>
+    <div class="header-right">
+      <div class="trophy" title="Trophies">🏆 <span id="trophyCount">0</span></div>
+    </div>
+  </header>
+
+  <main class="container page" id="home">
+    <div class="card center-card profile-level">
+      <div class="level-ring">
+        <div class="level-number" id="userLevel">1</div>
+      </div>
+      <div class="level-label" id="levelLabel">BRONZE</div>
+      <div class="xp-row">
+        <div class="small">XP: <span id="xpCurrent">0</span>/<span id="xpThreshold">100</span></div>
+        <div id="profileLevel" class="small">Lvl 1</div>
+      </div>
+      <div class="progress-track"><div id="xpBar" class="progress-bar"></div></div>
+    </div>
+
+    <div class="card">
+      <h3>Subjects</h3>
+      <div id="skillsList" class="skills-list"></div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="nav-btn" href="./home.html">Home</a>
+    <a class="nav-btn" href="./quests.html">Quests</a>
+    <a class="nav-btn" href="./profile.html">Profile</a>
+  </nav>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <button id="modalClose" class="modal-close">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
