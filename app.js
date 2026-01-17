@@ -20,7 +20,6 @@ const defaultState = {
         Biology: { level: 1, xp: 10, threshold: 50 },
     },
     quests: [], // populated below
-    auth: { loggedIn: false, userEmail: '' },
 };
 
 const sampleQuests = [
@@ -426,10 +425,9 @@ function renderProfile(){
 }
 
 function init(){
-    console.log('Initializing Study Leveling App...');
+    console.log('Initializing Study Leveling App on:', location.pathname);
     if(!window.state.quests || window.state.quests.length === 0) window.state.quests = JSON.parse(JSON.stringify(sampleQuests));
 
-    // Attach modal global handlers
     const modal = window.qs('#modal');
     if(modal){
         const mc = window.qs('#modalClose');
@@ -442,49 +440,19 @@ function init(){
     if(sForm){
         sForm.onsubmit = (e) => {
             e.preventDefault();
-            // support index.html username/password and auth.html email-only forms
             const usernameInput = sForm.querySelector('input[name="username"]');
             const passwordInput = sForm.querySelector('input[name="password"]');
-            const emailInput = sForm.querySelector('input[name="email"]');
-
             const u = usernameInput ? usernameInput.value.trim() : '';
             const p = passwordInput ? passwordInput.value.trim() : '';
-            const email = emailInput ? emailInput.value.trim() : '';
 
-            if (u && p) {
-                // preserve demo admin/admin login
-                if(u === 'admin' && p === 'admin') {
-                    window.state.auth.loggedIn = true;
-                    window.state.auth.userEmail = u;
-                    saveState(window.state);
-                    window.location.href = './home.html';
-                    return;
-                } else {
-                    alert('Use admin/admin');
-                    return;
-                }
-            }
-
-            // support email-only sign-in (demo)
-            if (email) {
-                window.state.auth.loggedIn = true;
-                window.state.auth.userEmail = email;
-                saveState(window.state);
+            if(u === 'admin' && p === 'admin'){
                 window.location.href = './home.html';
                 return;
             }
 
-            alert('Please enter credentials to sign in.');
+            alert('Use admin/admin to enter the demo.');
         };
     }
-
-    // Auth Guard
-    // more robust filename-based detection (handles file:// and different paths)
-    const segs = location.pathname.split('/');
-    const filename = (segs.pop() || '').toLowerCase();
-    const isLoginPage = filename === '' || filename === 'index.html' || filename === 'index.htm';
-    if(!window.state.auth?.loggedIn && !isLoginPage) window.location.href = './index.html';
-    if(window.state.auth?.loggedIn && isLoginPage) window.location.href = './home.html';
 
     initNav();
     window.render();

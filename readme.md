@@ -38,6 +38,7 @@ CSC541---Group-Project/
 ├── test-signin.html     # Testing utilities
 ├── app.js               # Core application logic
 ├── multiplayer.js       # Multiplayer game logic
+├── run.bat              # 🚀 Quick launch script (Windows)
 ├── Assets/
 │   └── style.css        # Global styling & UI
 └── readme.md            # This file
@@ -51,7 +52,10 @@ CSC541---Group-Project/
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 - No server setup required (client-side application)
 
-### Installation
+### Quick Start (Windows)
+Simply double-click **`run.bat`** in the project folder to launch the application!
+
+### Installation & Manual Launch
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/CSC541---Group-Project.git
@@ -59,8 +63,9 @@ CSC541---Group-Project/
    ```
 
 2. Open in your browser:
-   - Simply open `index.html` in your preferred web browser
-   - Or use a local server for better experience:
+   - **Option A (Fastest)**: Double-click `run.bat` to auto-launch
+   - **Option B**: Manually open `index.html` in your preferred web browser
+   - **Option C**: Use a local server for better experience:
      ```bash
      # If you have Python installed
      python -m http.server 8000
