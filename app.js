@@ -6,18 +6,23 @@ const STORAGE_KEY = 'study_leveling_v1';
 const defaultState = {
     profile: {
         name: 'Player',
-        trophies: 3,
+        trophies: 5,
         badges: [],
     },
     user: {
-        level: 1,
-        xp: 0,
-        xpThreshold: 100,
+        level: 10,
+        xp: 50,
+        xpThreshold: 300,
     },
     subjects: {
-        Math: { level: 2, xp: 40, threshold: 100 },
-        Physics: { level: 4, xp: 80, threshold: 200 },
-        Biology: { level: 1, xp: 10, threshold: 50 },
+        Math: { level: 6, xp: 40, threshold: 150 },
+        Physics: { level: 8, xp: 80, threshold: 250 },
+        Biology: { level: 5, xp: 10, threshold: 120 },
+    },
+    achievements: {
+        hardQuestsCompleted: 4,
+        mediumQuestsCompleted: 3,
+        easyQuestsCompleted: 5,
     },
     quests: [], // populated below
 };
@@ -94,7 +99,18 @@ function saveState(s){
 function loadState(){
     try{
         const raw = localStorage.getItem(STORAGE_KEY);
-        if(raw) return JSON.parse(raw);
+        if(raw) {
+            const loaded = JSON.parse(raw);
+            // Ensure achievements object exists for backward compatibility
+            if(!loaded.achievements){
+                loaded.achievements = {
+                    hardQuestsCompleted: 0,
+                    mediumQuestsCompleted: 0,
+                    easyQuestsCompleted: 0,
+                };
+            }
+            return loaded;
+        }
     }catch(e){console.warn('failed to load state',e)}
     const s = JSON.parse(JSON.stringify(defaultState));
     s.quests = sampleQuests;
@@ -122,6 +138,63 @@ function renderHeader(){
     if(nameEl) nameEl.textContent = window.state.profile.name || 'Player';
     const trophyEl = window.qs('#trophyCount');
     if(trophyEl) trophyEl.textContent = window.state.profile.trophies || 0;
+
+    // Make trophy display clickable
+    const trophyDisplay = window.qs('.trophy');
+    if(trophyDisplay){
+        trophyDisplay.style.cursor = 'pointer';
+        trophyDisplay.onclick = showTrophyPopup;
+    }
+}
+
+function showTrophyPopup(){
+    const modal = window.qs('#modal');
+    const body = window.qs('#modalBody');
+    if(!modal || !body) return;
+
+    const hardCompleted = window.state.achievements.hardQuestsCompleted;
+    const trophies = [];
+
+    // Define all trophy tiers
+    const trophyTiers = [
+        { threshold: 3, name: 'Bronze Champion', emoji: '🥉', description: 'Complete 3 hard quests' },
+        { threshold: 5, name: 'Silver Warrior', emoji: '🥈', description: 'Complete 5 hard quests' },
+        { threshold: 10, name: 'Gold Master', emoji: '🥇', description: 'Complete 10 hard quests' },
+        { threshold: 15, name: 'Platinum Elite', emoji: '💎', description: 'Complete 15 hard quests' },
+        { threshold: 25, name: 'Diamond Legend', emoji: '🏆', description: 'Complete 25 hard quests' },
+    ];
+
+    let trophyHTML = '<h2 style="margin-bottom:20px">🏆 Trophy Collection</h2>';
+    trophyHTML += `<p style="margin-bottom:15px;color:var(--text-muted)">Hard Quests Completed: <strong>${hardCompleted}</strong></p>`;
+    trophyHTML += '<div style="display:flex;flex-direction:column;gap:12px">';
+
+    trophyTiers.forEach(trophy => {
+        const earned = hardCompleted >= trophy.threshold;
+        const style = earned
+            ? 'background:linear-gradient(135deg,var(--accent),#a285ff);padding:12px;border-radius:8px;border:2px solid var(--accent)'
+            : 'background:var(--bg-darker);padding:12px;border-radius:8px;border:2px solid var(--border);opacity:0.5';
+
+        trophyHTML += `
+            <div style="${style}">
+                <div style="display:flex;align-items:center;gap:12px">
+                    <div style="font-size:28px">${trophy.emoji}</div>
+                    <div style="flex:1">
+                        <div style="font-weight:700;font-size:14px">${trophy.name}</div>
+                        <div style="font-size:12px;color:var(--text-muted)">${trophy.description}</div>
+                    </div>
+                    ${earned ? '<div style="color:var(--success);font-size:20px">✓</div>' : '<div style="color:var(--text-muted);font-size:16px">🔒</div>'}
+                </div>
+            </div>
+        `;
+    });
+
+    trophyHTML += '</div>';
+    trophyHTML += '<div style="margin-top:20px;display:flex;justify-content:flex-end">';
+    trophyHTML += '<button class="btn" onclick="window.qs(\'#modal\').classList.add(\'hidden\')">Close</button>';
+    trophyHTML += '</div>';
+
+    body.innerHTML = trophyHTML;
+    modal.classList.remove('hidden');
 }
 
 function renderHome(){
@@ -280,10 +353,24 @@ function completeQuest(id){
     if(q.subject && window.state.subjects[q.subject]){
         addSubjectXP(q.subject, Math.floor(q.xp/2));
     }
+
+    // Track quest completion by difficulty
+    if(q.difficulty === 'hard'){
+        window.state.achievements.hardQuestsCompleted++;
+    } else if(q.difficulty === 'medium'){
+        window.state.achievements.mediumQuestsCompleted++;
+    } else if(q.difficulty === 'easy'){
+        window.state.achievements.easyQuestsCompleted++;
+    }
+
     q.status = 'done';
     if(q.feedback){
         window.state.profile.badges.push({id:'fb_ack_'+Date.now(), name:'Feedback Contributor'});
     }
+
+    // Check for trophy and badge achievements
+    checkAndAwardAchievements();
+
     saveState(window.state);
     if(window.render) window.render();
     showQuestCompleteModal(q);
@@ -303,14 +390,80 @@ function showQuestCompleteModal(q){
     modal.classList.remove('hidden');
 }
 
+// Check and award achievements for trophies and badges
+function checkAndAwardAchievements(){
+    const state = window.state;
+
+    // Trophy achievements based on hard quest completions
+    const hardCompleted = state.achievements.hardQuestsCompleted;
+    let expectedTrophies = 0;
+
+    if(hardCompleted >= 3) expectedTrophies++;
+    if(hardCompleted >= 5) expectedTrophies++;
+    if(hardCompleted >= 10) expectedTrophies++;
+    if(hardCompleted >= 15) expectedTrophies++;
+    if(hardCompleted >= 25) expectedTrophies++;
+
+    // Set trophies (they accumulate)
+    state.profile.trophies = Math.max(state.profile.trophies, expectedTrophies);
+
+    // Badge achievements - User level milestones
+    awardBadgeIfNew('level_5', '⭐ Rising Scholar', state.user.level >= 5);
+    awardBadgeIfNew('level_10', '🎓 Knowledge Seeker', state.user.level >= 10);
+    awardBadgeIfNew('level_25', '📚 Book Warrior', state.user.level >= 25);
+    awardBadgeIfNew('level_50', '🏅 Academic Elite', state.user.level >= 50);
+    awardBadgeIfNew('level_100', '👑 Study Legend', state.user.level >= 100);
+
+    // Badge achievements - Subject proficiency milestones
+    for(const [subject, info] of Object.entries(state.subjects)){
+        awardBadgeIfNew(`${subject}_5`, `📖 ${subject} Novice`, info.level >= 5);
+        awardBadgeIfNew(`${subject}_10`, `✏️ ${subject} Student`, info.level >= 10);
+        awardBadgeIfNew(`${subject}_15`, `🔬 ${subject} Scholar`, info.level >= 15);
+        awardBadgeIfNew(`${subject}_20`, `🎯 ${subject} Master`, info.level >= 20);
+        awardBadgeIfNew(`${subject}_30`, `💫 ${subject} Sage`, info.level >= 30);
+    }
+
+    // Quest completion badges
+    const totalQuestsDone = state.quests.filter(q => q.status === 'done').length;
+    awardBadgeIfNew('first_quest', '🌟 First Steps', totalQuestsDone >= 1);
+    awardBadgeIfNew('quest_5', '🚀 Quest Explorer', totalQuestsDone >= 5);
+    awardBadgeIfNew('quest_10', '🗺️ Adventure Seeker', totalQuestsDone >= 10);
+    awardBadgeIfNew('quest_25', '🏆 Quest Champion', totalQuestsDone >= 25);
+    awardBadgeIfNew('quest_50', '💎 Quest Legend', totalQuestsDone >= 50);
+
+    // Difficulty-based badges
+    awardBadgeIfNew('easy_10', '🌱 Easy Master', state.achievements.easyQuestsCompleted >= 10);
+    awardBadgeIfNew('medium_10', '⚡ Medium Crusher', state.achievements.mediumQuestsCompleted >= 10);
+    awardBadgeIfNew('hard_5', '🔥 Hard Conqueror', state.achievements.hardQuestsCompleted >= 5);
+    awardBadgeIfNew('hard_10', '💪 Challenge Accepted', state.achievements.hardQuestsCompleted >= 10);
+
+    // Special themed badges
+    const allSubjectsLevel5 = Object.values(state.subjects).every(s => s.level >= 5);
+    awardBadgeIfNew('polymath', '🧠 Polymath', allSubjectsLevel5);
+
+    const anySubjectLevel20 = Object.values(state.subjects).some(s => s.level >= 20);
+    awardBadgeIfNew('specialist', '🎖️ Specialist', anySubjectLevel20);
+}
+
+function awardBadgeIfNew(badgeId, badgeName, condition){
+    if(!condition) return;
+    const exists = window.state.profile.badges.some(b => b.id === badgeId);
+    if(!exists){
+        window.state.profile.badges.push({id: badgeId, name: badgeName});
+    }
+}
+
 function addUserXP(amount){
     window.state.user.xp += amount;
     while(window.state.user.xp >= window.state.user.xpThreshold){
         window.state.user.xp -= window.state.user.xpThreshold;
         window.state.user.level += 1;
         window.state.user.xpThreshold = Math.round(window.state.user.xpThreshold * 1.25);
+        // Check for level-based badges after leveling up
+        checkAndAwardAchievements();
     }
 }
+
 function addSubjectXP(sub, amount){
     const s = window.state.subjects[sub];
     if(!s) return;
@@ -319,6 +472,8 @@ function addSubjectXP(sub, amount){
         s.xp -= s.threshold;
         s.level += 1;
         s.threshold = Math.round(s.threshold * 1.4);
+        // Check for subject-based badges after leveling up
+        checkAndAwardAchievements();
     }
 }
 
@@ -427,6 +582,10 @@ function renderProfile(){
 function init(){
     console.log('Initializing Study Leveling App on:', location.pathname);
     if(!window.state.quests || window.state.quests.length === 0) window.state.quests = JSON.parse(JSON.stringify(sampleQuests));
+
+    // Check and award achievements on startup (ensures badges are up to date)
+    checkAndAwardAchievements();
+    saveState(window.state);
 
     const modal = window.qs('#modal');
     if(modal){

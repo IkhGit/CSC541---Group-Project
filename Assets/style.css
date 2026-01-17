@@ -15,10 +15,104 @@
 *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif}
 html,body,#app{height:100%;background:#08080a;margin:0;color:#f0f0f5;overflow-x:hidden}
 
-.app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:rgba(8,8,10,0.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
-.app-header h1{margin:0;font-size:20px;font-weight:700;background:linear-gradient(90deg, #fff, #a285ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.app-header .small, .small{color:var(--muted);font-size:12px}
-.header-right .trophy{background:var(--glass);padding:8px 14px;border-radius:12px;border:1px solid var(--border);color:#ffd700;font-weight:600}
+/* Login Page Hero Styles */
+.login-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, rgba(126, 87, 255, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom, rgba(255, 140, 66, 0.1) 0%, transparent 50%),
+                #08080a;
+}
+
+.login-container{
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+.login-hero{
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.hero-title{
+    font-size: 72px;
+    font-weight: 900;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #fff 0%, #a285ff 50%, #7e57ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 80px rgba(126, 87, 255, 0.5);
+    letter-spacing: -2px;
+    line-height: 1.1;
+}
+
+.hero-subtitle{
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.login-card{
+    max-height: 40vh;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeInDown{
+    from{
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp{
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced App Header Title */
+.app-header{display:flex;justify-content:space-between;align-items:center;padding:24px 28px;background:rgba(8,8,10,0.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
+.app-header h1{
+    margin:0;
+    font-size: 32px;
+    font-weight: 800;
+    background:linear-gradient(135deg, #fff, #a285ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    text-shadow: 0 0 30px rgba(126, 87, 255, 0.3);
+}
+.app-header .small, .small{color:var(--muted);font-size:13px}
+.header-right .trophy{
+    background:var(--glass);
+    padding:8px 14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    color:#ffd700;
+    font-weight:600;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.header-right .trophy:hover{
+    transform: scale(1.05);
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+}
 
 .container{padding:20px;padding-bottom:100px}
 .page{max-width:480px;margin:0 auto}
@@ -195,14 +289,21 @@ html,body,#app{height:100%;background:#08080a;margin:0;color:#f0f0f5;overflow-x:
 }
 .quiz-opt:hover{background: var(--accent-glow); border-color: var(--accent)}
 
-.badges-list{display:flex;gap:10px;flex-wrap:wrap}
+.badges-list{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .badge{
     background: linear-gradient(135deg, var(--accent), #a285ff);
-    padding:8px 14px;
-    border-radius:10px;
-    font-size:12px;
+    padding:10px 16px;
+    border-radius:12px;
+    font-size:13px;
     font-weight:700;
     box-shadow: 0 4px 12px var(--accent-glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.badge:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--accent-glow);
 }
 
 @media(min-width:900px){
@@ -404,3 +505,30 @@ label{font-size:13px;font-weight:600;color:var(--muted);margin-top:12px;display:
 .hidden {
     display: none !important;
 }
+
+/* Responsive adjustments for login page */
+@media(max-width: 768px){
+    .hero-title{
+        font-size: 48px;
+        letter-spacing: -1px;
+    }
+    .hero-subtitle{
+        font-size: 16px;
+    }
+    .login-hero{
+        margin-bottom: 36px;
+    }
+}
+
+@media(max-width: 480px){
+    .hero-title{
+        font-size: 40px;
+    }
+    .hero-subtitle{
+        font-size: 14px;
+    }
+    .app-header h1{
+        font-size: 24px;
+    }
+}
+
