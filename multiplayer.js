@@ -141,7 +141,8 @@ function displayQuestion() {
 
 // Handle answer selection
 function selectAnswer(selectedIndex) {
-    if (multiplayerState.selectedAnswer !== null) return; // Already answered
+    // Check if game is still in progress and no answer has been selected
+    if (!multiplayerState.gameInProgress || multiplayerState.selectedAnswer !== null) return;
 
     const question = multiplayerState.quizQuestions[multiplayerState.currentQuestion];
     const isCorrect = selectedIndex === question.a;
@@ -159,7 +160,7 @@ function selectAnswer(selectedIndex) {
     // Simulate opponent answers (with varying difficulty)
     simulateOpponentAnswers();
 
-    // Mark selected answer
+    // Mark selected answer (prevents double-clicking)
     multiplayerState.selectedAnswer = selectedIndex;
 
     // Show correct answer
@@ -175,6 +176,9 @@ function selectAnswer(selectedIndex) {
 
     // Move to next question after delay
     setTimeout(() => {
+        // Only proceed if game is still in progress
+        if (!multiplayerState.gameInProgress) return;
+
         multiplayerState.currentQuestion++;
         updatePlayerDisplays();
         displayQuestion();
