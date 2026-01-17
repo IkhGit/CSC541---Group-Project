@@ -224,3 +224,183 @@ input, select, textarea{
 }
 input:focus{border-color: var(--accent)}
 label{font-size:13px;font-weight:600;color:var(--muted);margin-top:12px;display:block}
+
+/* Multiplayer Mode Styles */
+.subject-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.subject-select-btn {
+    padding: 16px;
+    border-radius: 14px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.subject-select-btn:hover {
+    background: rgba(126, 87, 255, 0.15);
+    border-color: var(--accent);
+}
+
+.subject-select-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.btn-large {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+}
+
+.btn-secondary {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    color: var(--muted);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.game-players-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.player-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.player-card-self {
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.player-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.player-score {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.player-streak {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.question-counter {
+    margin-bottom: 16px;
+}
+
+.question-section {
+    margin: 20px 0;
+}
+
+.question-section h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-btn {
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.option-btn:hover:not(:disabled) {
+    background: rgba(126, 87, 255, 0.2);
+    border-color: var(--accent);
+}
+
+.option-btn.correct {
+    background: rgba(0, 210, 106, 0.3);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.option-btn.incorrect {
+    background: rgba(249, 47, 96, 0.3);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+}
+
+.results-podium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.podium-slot {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.podium-slot .medal {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.place-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.place-score {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.hidden {
+    display: none !important;
+}

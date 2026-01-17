@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Study Leveling — Multiplayer</title>
+    <link rel="stylesheet" href="Assets/style.css">
+</head>
+<body>
+<div id="app">
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Multiplayer Mode</h1>
+            <small class="small">Race against opponents</small>
+        </div>
+        <div class="header-right">
+            <div class="trophy" title="Trophies">🏆 <span id="trophyCount">0</span></div>
+        </div>
+    </header>
+
+    <main class="container page" id="multiplayer">
+        <div id="gameSelectionView">
+            <div class="card center-card">
+                <h3>⚡ Quick Duel</h3>
+                <div class="small">Challenge 2 opponents in a timed quiz battle!</div>
+            </div>
+
+            <div class="card">
+                <h4>Select a Subject</h4>
+                <div id="subjectSelectContainer" class="subject-select-grid"></div>
+            </div>
+
+            <div class="card">
+                <button class="btn btn-large" id="startGameBtn" disabled>Start Game</button>
+            </div>
+        </div>
+
+        <div id="gameplayView" class="hidden">
+            <div class="game-players-info">
+                <div id="player1Info" class="player-card player-card-self">
+                    <div class="player-name">You</div>
+                    <div class="player-score"><span id="player1Score">0</span>/10</div>
+                    <div class="player-streak">Streak: <span id="player1Streak">0</span></div>
+                </div>
+                <div id="player2Info" class="player-card">
+                    <div class="player-name">Opponent 1</div>
+                    <div class="player-score"><span id="player2Score">0</span>/10</div>
+                    <div class="player-streak">Streak: <span id="player2Streak">0</span></div>
+                </div>
+                <div id="player3Info" class="player-card">
+                    <div class="player-name">Opponent 2</div>
+                    <div class="player-score"><span id="player3Score">0</span>/10</div>
+                    <div class="player-streak">Streak: <span id="player3Streak">0</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="question-counter">
+                    <small>Question <span id="questionNumber">1</span>/10</small>
+                    <div class="progress-track" style="margin-top:8px">
+                        <div id="questionProgress" class="progress-bar"></div>
+                    </div>
+                </div>
+
+                <div id="questionContainer" class="question-section">
+                    <h3 id="questionText"></h3>
+                    <div id="optionsContainer" class="options-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsView" class="hidden">
+            <div class="card center-card">
+                <h2 id="resultTitle">Game Over!</h2>
+                <div id="resultMessage" class="small" style="margin-top:12px"></div>
+            </div>
+
+            <div class="results-podium">
+                <div id="podium1" class="podium-slot hidden">
+                    <div class="medal">🥇</div>
+                    <div class="place-name" id="place1Name">1st Place</div>
+                    <div class="place-score" id="place1Score"></div>
+                </div>
+                <div id="podium2" class="podium-slot hidden">
+                    <div class="medal">🥈</div>
+                    <div class="place-name" id="place2Name">2nd Place</div>
+                    <div class="place-score" id="place2Score"></div>
+                </div>
+                <div id="podium3" class="podium-slot hidden">
+                    <div class="medal">🥉</div>
+                    <div class="place-name" id="place3Name">3rd Place</div>
+                    <div class="place-score" id="place3Score"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <button class="btn btn-large" id="playAgainBtn">Play Again</button>
+                <button class="btn btn-secondary btn-large" id="backToMenuBtn" style="margin-top:10px">Back to Menu</button>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a class="nav-btn" href="./home.html">Home</a>
+        <a class="nav-btn" href="./quests.html">Quests</a>
+        <a class="nav-btn" href="./multiplayer.html">Multiplayer</a>
+        <a class="nav-btn" href="./profile.html">Profile</a>
+    </nav>
+</div>
+
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="modalClose" class="modal-close">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="./app.js"></script>
+<script src="./multiplayer.js"></script>
+</body>
+</html>

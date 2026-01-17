@@ -18,6 +18,7 @@ This application is a collaborative masterpiece crafted by 4 talented developers
 - **🎖️ Badge & Trophy System** - Unlock achievements as you progress
 - **📊 Subject Progression** - Track individual subject levels independently
 - **🎓 Interactive Quizzes** - Engage with difficulty-scaled challenges
+- **⚡ Multiplayer Mode** - Race against AI opponents in timed quiz battles
 - **💾 Persistent Progress** - Your achievements are saved locally
 - **🔐 Authentication** - Secure login system for personalized profiles
 - **👤 User Profiles** - Customize your learning profile and view statistics
@@ -31,10 +32,12 @@ CSC541---Group-Project/
 ├── index.html           # Main landing page
 ├── home.html            # Dashboard & home screen
 ├── quests.html          # Quest selection & gameplay
+├── multiplayer.html     # Multiplayer battle mode
 ├── auth.html            # Authentication/login interface
 ├── profile.html         # User profile & statistics
 ├── test-signin.html     # Testing utilities
 ├── app.js               # Core application logic
+├── multiplayer.js       # Multiplayer game logic
 ├── Assets/
 │   └── style.css        # Global styling & UI
 └── readme.md            # This file
@@ -92,20 +95,36 @@ CSC541---Group-Project/
   - Subject levels and XP thresholds display properly
   - Badges/achievements populate as they're earned
 
-#### 4️⃣ **Data Persistence Testing**
+#### 4️⃣ **Multiplayer Mode Testing**
+- Navigate to `multiplayer.html` from the bottom navigation
+- Select a subject (Math, Physics, Biology, History)
+- Click "Start Game" to begin a multiplayer match
+- Verify gameplay elements:
+  - ✅ 10 questions appear in sequence
+  - ✅ Player scores update in real-time
+  - ✅ Opponent AI generates random answers
+  - ✅ Correct/incorrect answer feedback displays properly
+  - ✅ Game progresses to next question after 1.5 seconds
+- After all 10 questions, verify results:
+  - ✅ Ranking correctly determined (1st: 10/10, 2nd: 8/10, 3rd: 6/10 or less)
+  - ✅ Podium shows correct placement and scores
+  - ✅ "Play Again" button resets the game
+  - ✅ "Back to Menu" returns to subject selection
+
+#### 5️⃣ **Data Persistence Testing**
 - Complete some quests and earn XP
 - Refresh the page (F5 or Ctrl+R)
 - Verify that all progress is maintained
 - Check browser LocalStorage (`STUDY_LEVELING_V1` key)
 
-#### 5️⃣ **UI/UX Testing**
+#### 6️⃣ **UI/UX Testing**
 - Test responsiveness by resizing browser window
 - Verify all buttons and links are functional
 - Check color schemes and visual hierarchy
 - Test navigation between all pages
 - Verify animations and transitions work smoothly
 
-#### 6️⃣ **Browser Compatibility**
+#### 7️⃣ **Browser Compatibility**
 - Test on Chrome, Firefox, Safari, and Edge
 - Check console for any JavaScript errors (F12)
 - Verify localStorage works across browsers
@@ -164,11 +183,7 @@ This project is part of an academic collaboration.
 ## 🌟 Future Enhancements
 
 - [ ] Multiplayer leaderboards
-- [ ] Custom quest creation
 - [ ] Spaced repetition algorithm
-- [ ] Backend sync across devices
-- [ ] Mobile app version
-- [ ] Social sharing features
 - [ ] Dark mode toggle
 
 ---
